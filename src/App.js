@@ -1,4 +1,4 @@
-// App.js - Complete Updated with Subtle Center Highlight
+// App.js - Complete with Home Page Content
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
 
@@ -11,27 +11,6 @@ const App = () => {
   const scrollFrameRef = useRef(null);
   const [carouselOffsets, setCarouselOffsets] = useState({ dishes: 0, desserts: 0, 'cool-drinks': 0 });
   const animationRefs = useRef({});
-
-  const particles = useMemo(() => {
-    const particleImages = [
-      '/briyani.jpg', '/cake.png', '/campa.png', '/chapati.png',
-      '/Chicken%2065.png', '/coca%20cola.png', '/donut.png', '/dosa.png',
-      '/falooda.jpg', '/fanta.png', '/fried%20rice.png', '/ice%20cream(cone).png',
-      '/ice%20cream(cup).png', '/idli.jpg', '/lassi.png', '/meals.png',
-      '/noodles.png', '/pepsi.png', '/poori.png', '/porotta.png', '/sprite.png',
-    ];
-
-    return [...particleImages]
-      .sort(() => Math.random() - 0.5)
-      .map((imageSrc, index) => ({
-        id: index,
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 6}s`,
-        animationDuration: `${8 + Math.random() * 4}s`,
-        size: `${0.9 + Math.random() * 1.2}rem`,
-        imageSrc,
-      }));
-  }, []);
 
   const menuSections = useMemo(() => ([
     {
@@ -53,12 +32,12 @@ const App = () => {
     },
     {
       id: 'desserts',
-      title: 'Deserts',
+      title: 'Desserts',
       subtitle: 'Sweet finishes for every meal',
       items: [
         { name: 'Cake', image: '/cake.png' },
         { name: 'Donut', image: '/donut.png' },
-        { name: 'Falooda', image: '/falooda.jpg' },
+        { name: 'Falooda', image: '/falloda.png' },
         { name: 'Ice Cream (Cone)', image: '/ice%20cream(cone).png' },
         { name: 'Ice Cream (Cup)', image: '/ice%20cream(cup).png' },
       ],
@@ -71,7 +50,7 @@ const App = () => {
         { name: 'Campa', image: '/campa.png' },
         { name: 'Coca Cola', image: '/coca%20cola.png' },
         { name: 'Fanta', image: '/fanta.png' },
-        { name: 'Lassi', image: '/lassi.png' },
+        { name: 'Miranda', image: '/Miranda.png' },
         { name: 'Pepsi', image: '/pepsi.png' },
         { name: 'Sprite', image: '/sprite.png' },
       ],
@@ -147,7 +126,6 @@ const App = () => {
     };
   }, [biryaniRevealed, idliRevealed]);
 
-  // Ultra-smooth continuous carousel animation
   useEffect(() => {
     const ids = ['dishes', 'desserts', 'cool-drinks'];
     const itemWidth = 20;
@@ -210,25 +188,41 @@ const App = () => {
         </div>
         <div className="nav-links">
           <a href="#home">Home</a>
-          <a href="#biryani">Biryani</a>
-          <a href="#idli">Idli</a>
           <a href="#menu">Menu</a>
-          <button className="order-btn">Reserve Table</button>
+          <a className="order-btn" href="#reservation">Reserve Table</a>
         </div>
       </nav>
 
-      <section className="hero" id="home">
+      {/* Hero Section */}
+      <section className="hero" id="home" aria-label="Home">
         <div className="hero-content">
+          <div className="hero-badge">✦ Welcome to Spice Paradise ✦</div>
+          
           <div className="floating-text-container">
             <h1 className="hero-title">
-              <span className="title-word word-1">Experience</span>
-              <span className="title-word word-2">Authentic</span>
-              <span className="title-word word-3">Indian</span>
-              <span className="title-word word-4">Cuisine</span>
+              Authentic Indian Cuisine
             </h1>
-            <p className="hero-subtitle">Where every spice tells a story of tradition</p>
           </div>
           
+          <p className="hero-subtitle">
+            Where every spice tells a story of tradition
+          </p>
+          
+          <p className="hero-copy">
+            Experience the rich flavors of India through our carefully crafted dishes.
+            From aromatic biryanis to comforting idlis, each plate brings you closer
+            to the heart of Indian culinary heritage.
+          </p>
+          
+          <div className="hero-actions">
+            <a href="#menu" className="hero-button hero-button-primary">
+              Explore Our Menu
+            </a>
+            <a href="#reservation" className="hero-button hero-button-secondary">
+              Book a Table
+            </a>
+          </div>
+
           <div className="scroll-indicator">
             <div className="scroll-mouse">
               <div className="scroll-wheel"></div>
@@ -237,32 +231,17 @@ const App = () => {
           </div>
         </div>
 
-        <div className="particles-container">
-          {particles.map((particle) => (
-            <div
-              key={particle.id}
-              className="particle"
-              style={{
-                left: particle.left,
-                animationDelay: particle.animationDelay,
-                animationDuration: particle.animationDuration,
-                width: particle.size,
-                height: particle.size,
-              }}
-            >
-              <img src={particle.imageSrc} alt="" aria-hidden="true" className="particle-image" />
-            </div>
-          ))}
-        </div>
       </section>
 
+      {/* Menu Intro */}
       <section className="menu-section menu-intro" id="menu">
         <div className="menu-header">
-          <h2 className="menu-title">Menu</h2>
+          <h2 className="menu-title">Our Menu</h2>
+          <p className="menu-subtitle">Discover the flavors that make us special</p>
         </div>
-        
       </section>
 
+      {/* Biryani Section */}
       <section className="food-section biryani-section" id="biryani" ref={biryaniSectionRef}>
         <div className="section-container">
           <div className={`food-image-side ${biryaniRevealed ? 'revealed' : ''}`}>
@@ -289,6 +268,7 @@ const App = () => {
         </div>
       </section>
 
+      {/* Idli Section */}
       <section className="food-section idli-section" id="idli" ref={idliSectionRef}>
         <div className="section-container reverse">
           <div className={`food-content-side ${idliRevealed ? 'revealed' : ''}`}>
@@ -355,6 +335,111 @@ const App = () => {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      {/* Reservation Section */}
+      <section className="reservation-section">
+        <div className="reservation-container" id="reservation">
+          <div className="reservation-header">
+            <h2 className="menu-title reservation-title">Reservation</h2>
+            <p className="menu-subtitle">Secure your spot for an unforgettable dining experience</p>
+          </div>
+          <div className="reservation-layout">
+            <div className="reservation-aside">
+              <h3 className="reservation-book-heading">Book Your Table</h3>
+              <p className="reservation-copy">
+                Reserve your dining experience with us. We recommend booking at least 24 hours in advance for weekend evenings.
+              </p>
+
+              <div className="reservation-socials">
+                <p className="reservation-socials-label">Stay connected with us</p>
+                <div className="reservation-social-row">
+                  <a className="reservation-social-link" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm10.5 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
+                  </a>
+                  <a className="reservation-social-link" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V7a1 1 0 0 1 1-1h2V3h-3a4 4 0 0 0-4 4v1.5H8V11h2v10h4V11h2.5l.5-2.5H14z"/></svg>
+                  </a>
+                  <a className="reservation-social-link" href="mailto:hello@spiceparadise.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v.3l8 5.2 8-5.2V7H4zm16 10V9.7l-7.4 4.8a1 1 0 0 1-1.1 0L4 9.7V17h16z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div className="reservation-info-cards">
+                <div className="reservation-info-card">
+                  <span className="reservation-info-icon">☎</span>
+                  <div>
+                    <h3>Phone</h3>
+                    <p>+91 98765 43210</p>
+                  </div>
+                </div>
+
+                <div className="reservation-info-card">
+                  <span className="reservation-info-icon">⌖</span>
+                  <div>
+                    <h3>Location</h3>
+                    <p>123, 5th Street, Gandhipuram, Coimbatore - 641012</p>
+                  </div>
+                </div>
+
+                <div className="reservation-info-card">
+                  <span className="reservation-info-icon">◷</span>
+                  <div>
+                    <h3>Hours</h3>
+                    <p>8:30 AM - 9:00 PM</p>
+                    <p>Open All Days</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="reservation-card">
+              <form className="reservation-form">
+                <div className="reservation-field">
+                  <label htmlFor="reservation-name">Name</label>
+                  <input id="reservation-name" type="text" placeholder="Your full name" />
+                </div>
+
+                <div className="reservation-field">
+                  <label htmlFor="reservation-email">Email</label>
+                  <input id="reservation-email" type="email" placeholder="your@email.com" />
+                </div>
+
+                <div className="reservation-field">
+                  <label htmlFor="reservation-phone">Phone</label>
+                  <input id="reservation-phone" type="tel" placeholder="+91 98765 43210" />
+                </div>
+
+                <div className="reservation-field">
+                  <label htmlFor="reservation-seats">Guests</label>
+                  <input id="reservation-seats" type="number" min="1" placeholder="2 Guests" />
+                </div>
+
+                <div className="reservation-field">
+                  <label htmlFor="reservation-date">Date</label>
+                  <input id="reservation-date" type="date" />
+                </div>
+
+                <div className="reservation-field">
+                  <label htmlFor="reservation-time">Time</label>
+                  <input id="reservation-time" type="time" />
+                </div>
+
+                <div className="reservation-field reservation-field-full">
+                  <label htmlFor="reservation-requests">Special Requests</label>
+                  <textarea id="reservation-requests" rows="4" placeholder="Any special occasions or dietary requirements?"></textarea>
+                </div>
+
+                <button type="submit" className="reservation-submit">Reserve Now</button>
+              </form>
+
+              <p className="reservation-note">
+                Note: our team will call you to confirm your reservation.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
