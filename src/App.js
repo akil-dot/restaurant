@@ -130,6 +130,7 @@ const App = () => {
     const ids = ['dishes', 'desserts', 'cool-drinks'];
     const itemWidth = 20;
     const speed = 0.04;
+    const currentAnimationRefs = animationRefs.current;
 
     const animate = () => {
       setCarouselOffsets((prev) => {
@@ -142,14 +143,14 @@ const App = () => {
         });
         return newOffsets;
       });
-      animationRefs.current.main = requestAnimationFrame(animate);
+      currentAnimationRefs.main = requestAnimationFrame(animate);
     };
 
-    animationRefs.current.main = requestAnimationFrame(animate);
+    currentAnimationRefs.main = requestAnimationFrame(animate);
 
     return () => {
-      if (animationRefs.current.main) {
-        cancelAnimationFrame(animationRefs.current.main);
+      if (currentAnimationRefs.main) {
+        cancelAnimationFrame(currentAnimationRefs.main);
       }
     };
   }, [menuSections]);
